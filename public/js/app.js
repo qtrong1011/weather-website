@@ -12,6 +12,7 @@ const weatherForm = document.querySelector('form')
 const searchTerm = document.querySelector('input')
 const messageOne = document.querySelector('#message-1')
 const messageTwo = document.querySelector('#message-2')
+const messageThree = document.querySelector('#message-3')
 
 // messageError.textContent = "from JS"
 
@@ -20,6 +21,7 @@ weatherForm.addEventListener('submit', (e)=>{
     const location = searchTerm.value
     messageOne.textContent = "Loading...."
     messageTwo.textContent = ""
+    messageThree.textContent = ""
     fetch('/weather?address=' + location).then((response)=>{
         response.json().then((data)=>{
             if(data.error){
@@ -27,7 +29,7 @@ weatherForm.addEventListener('submit', (e)=>{
             }
             messageOne.textContent = data.location
             messageTwo.textContent = data.forecast
+            messageThree.textContent = data.weather_code
         })
-
     })
 })
