@@ -5,7 +5,7 @@ const forecast = require('./utils/forecast')
 const geocode = require('./utils/geocode')
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 
 //Define paths for Express config
 const publicDirectoryPath = path.join(__dirname,'../public')
@@ -20,6 +20,10 @@ hbs.registerPartials(partialsPath)
 //Setup static directory to work
 app.use(express.static(publicDirectoryPath))
 
+const cors = require('cors');
+app.use(cors({
+    origin: '*'
+}));
 
 //Home Route
 app.get('',(req,res)=>{
@@ -50,6 +54,7 @@ app.get('/weather',(req,res)=>{
             error: 'You must provide an address.'
         })
     }else{
+        res.header("Access-Control-Allow-Origin", "*")
         geocode(req.query.address,(error, {lattitude,longitude,location}={})=>{ 
             if(error){
                 res.send({error})
